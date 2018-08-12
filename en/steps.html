@@ -43,7 +43,7 @@
 	</div>
 	<div class="row">
 	  <div class="small-9 medium-9 large-9 columns">
-	    <h4 class="title">MessageFlow Statistics <action><button class="small radius button" tabindex="0" id="stepsViewDetails" onclick="viewDetails()"> View Details</button> </action></h4>
+	    <h4 class="title">Getting started with ACEv11 - Message Flow Statistics <action><button class="small radius button" tabindex="0" id="stepsViewDetails" onclick="viewDetails()"> View Details</button> </action></h4>
 	  </div>
 	  <div class="small-3 medium-3 large-3 columns">
 		<a href="javascript:;" onclick="openHelpSystem('/com.ibm.etools.msgbroker.helphome.doc/help_home_msgbroker.htm')" class="small right helplink">IBM Knowledge Center</a> 
@@ -52,7 +52,7 @@
 	<hr>
 	<div class="row">
 		<div class="small-10 medium-10 large-10 columns">
-		<h5> Learn how turn on messageflow statistics tracking and view them in the WebUI. </h5>
+		<h5> Learn how to view ACE performance information using Message Flow Statistics </h5>
 		</div>
 		<div class="small-2 medium-2 large-2 columns">
 			<button class="small radius button right" tabindex="0" id="backToGallery" onclick="backToGallery()"> Back To Gallery
@@ -82,10 +82,10 @@
 					      	<h4>Import projects</h4>
 					        
 						    
-								<p> Click <span class="uicontrol">Import</span> and the <span class="application">StatsApp</span> application along with its .BAR file, <span class="application">StatsBar</span>. </p>
+								<p> Click <span class="uicontrol">Import</span> and the <span class="application">StatsApp</span> application will be imported into your workspace. </p>
 								
 							
-								<p> This simple application contains a message flow which simply receives HTTP data and echoes it back to the requesting client. Once we have created an Integration Server we will deploy this example flow later in the tutorial. </p>
+								<p> This simple application contains a message flow which receives HTTP data and echoes it back to the requesting client. Once we have created an Integration Server we will deploy this example flow later in the tutorial. This flow will enable us to respond to some small load on the integration server as we view the server's performance statistics in the Web UI. </p>
 								
 							
 						</div>
@@ -115,19 +115,23 @@
 									<ol>
 									
 									
-										<li> Assuming you are using a Windows platform, open an App Connect Enterprise Command Console and run the following command: <br><code>mqsicreateworkdir C:\StatsServer</code><br> where <b>C:\StatsServer</b> will the working directory for your Integration Server.
+										<li> Assuming you are using a Windows platform, open an App Connect Enterprise Command Console and run the following command to create a working directory which will be used to store the files which the runtime integration server needs:<br><code>mqsicreateworkdir C:\StatsServer</code><br> where <b>C:\StatsServer</b> will be the working directory for your integration server.
 										
 										</li>
 									
-										<li> Navigate to your server's working directory and locate the file 'server.conf.yaml'. Open it using your preffered text editor and set the following parameters: <span class="code">messageFlowMonitoring: active<br>StatsSnapPublicationOn: active<br>StatsSnapNodeDataLevel: advanced<br>StatsSnapOutputFormat: 'json'<br>StatsSnapThreadDataLevel: basic<br>StatsSnapAccountingOrigin: basic</span><br> Save and close this file.
+										<li> Navigate to your server's working directory and locate the file <span class="uicontrol">server.conf.yaml</span>. Open it using your preferred text editor, locate the Statistics section and edit the settings (the comments in the sample help with allowed values, and you will need to remove some # comment characters):<br><code>Statistics:&nbsp;<br>&nbsp;&nbsp;Snapshot:&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;accountingOrigin: 'basic'&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;nodeDataLevel: 'advanced'&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;outputFormat: 'json'&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;publicationOn: 'active'&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;threadDataLevel: 'basic'&nbsp;</code><br> Save and close the file.
 										
 										</li>
 									
-										<li> Now start the server by entering: <br><code>IntegrationServer --work-dir C:\StatsServer --name StatsServer --admin-rest-api 7600 --http-port-number 7800 --console-log</code><br> into an ACE Command Console.
+										<li> Back in the App Connect Enterprise Command Console window, start the server with the command:<br><code>IntegrationServer --work-dir C:\StatsServer --name StatsServer --admin-rest-api 7600 --http-port-number 7800 --console-log</code><br>
 										
 										</li>
 									
-										<li> Connect to the server in the toolkit then deploy the StatsBar.bar file to the server.
+										<li> In the App Connect Enterprise Toolkit, locate the Integration Explorer view (by default this is located in the bottom left corner), right click on the <span class="uicontrol">Integration Servers</span> label and select <span class="uicontrol">Connect to an Integration Server</span>. Enter the <span class="uicontrol">Host Name</span> as <span class="uicontrol">localhost</span> and the <span class="uicontrol">port</span> as <span class="uicontrol">7600</span> and click <span class="uicontrol">Finish</span>.
+										
+										</li>
+									
+										<li> Locate the Broker Archive file named <span class="uicontrol">StatsBar.bar</span> inside the Application project which you imported earlier named <span class="uicontrol">StatsApp</span>, then drag and drop it onto your server named <span class="uicontrol">StatsServer</span>.
 										
 										</li>
 									
@@ -160,34 +164,34 @@
 					      	<h4>Follow these steps to complete the tutorial</h4>
 					        
 						    
-								<p> Follow the following steps to complete the tutorial. </p>
+								<p> Send some messages to the message flow and view statistics in the Web User Interface </p>
 								
 								
 									
 									<ol>
 									
 									
-										<li> Navigate to a Command Prompt and run this command a handful of times:<br><code>curl -X POST http://localhost:7800/request -d HelloWorld</code>
+										<li> Navigate to a Command Prompt and run this command a handful of times:<br><code>curl -X POST http://localhost:7800/request -d HelloWorld</code><br>Each execution should receive the same fixed reply message:<br><code>{"OutputMessage":"This is a fixed reply message!"}</code>
 										
 										</li>
 									
-										<li> Assuming you did not get a 404 from the server, navigate to the WebUI for the server.
+										<li> Return to the administrative WebUI for the server which you opened in the Prepare stage.
 										
 										</li>
 									
-										<li> Navigate to the 'Statistics' tab on the navigation bar, then in the drop-down menu on the left select 'Message flow statstics' and wait a moment.
+										<li> When you first open the WebUI you will be looking at information at the Server level. Select the <span class="uicontrol">Statistics</span> tab on the navigation bar at the top.
 										
 										</li>
 									
-										<li> After a brief pause, you should see some records labelled 'Request' and 'internalReply' with various statistics about them. Notice that the values in the 'Total input messages' fields corresponds directly to the amount of curl requests you made to the server.
+										<li> After a brief pause you should see a tabular <span class="uicontrol">Message flow statistics</span> view which summarises activity at the flow level. Notice that the value in the <span class="uicontrol">Total input messages</span> column corresponds to the number of curl requests you made to the server.
 										
 										</li>
 									
-										<li> To get a more detailed view of how data is passing through your flows, change the view to 'Flow node statistics' in the 'Showing' drop-down.
+										<li> To get a more detailed view of how data is passing through your flows, change to the <span class="uicontrol">Flow node statistics</span> view to see a breakdown for each node in the flow.
 										
 										</li>
 									
-										<li> Each record in the previous screen corrsponded to an entire Flow, while in this view each record represents an individual Node in a Flow. On the right hand side you can see which Flow each Node belongs to.
+										<li> In both views, the message flow name links you to another page with information about the message flow. This also has a <span class="uicontrol">Statistics</span> tab which includes some graphs which you may like to explore.
 										
 										</li>
 									
