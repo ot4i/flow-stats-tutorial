@@ -185,11 +185,8 @@
                                         "details": "After a brief pause you should see a tabular <span class='uicontrol'>Message flow statistics</span> view which summarises activity at the flow level. Notice that the value in the <span class='uicontrol'>Total input messages</span> column corresponds to the number of curl requests you made to the server."
 											},
                         				    {
-												"details": "To get a more detailed view of how data is passing through your flows, change to the <span class='uicontrol'>Flow node statistics</span> view to see a breakdown for each node in the flow."
+												"details": "To get a more detailed view of how data is passing through your flows, change to the <span class='uicontrol'>Flow node statistics</span> view to see a breakdown for each node in the flow. To navigate to this view, click on the <span class='uicontrol'>StatsFlow</span> link in the <span class='uicontrol'>Flow name</span> column, and the UI will show the message flow's properties. Next click on the <span class='uicontrol'>Flow statistics</span> tab and you will see some graphs which you may like to explore." 
                         				    },
-                        				    {
-                                        "details": "In both views, the message flow name links you to another page with information about the message flow. This also has a <span class='uicontrol'>Flow Statistics</span> tab which includes some graphs which you may like to explore."
-                          					},
                                     {
                                         "details": "When you're ready to conclude this tutorial, stop the Integration Server in the Command Console and close your browser."
                           					}
